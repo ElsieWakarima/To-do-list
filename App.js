@@ -8,7 +8,40 @@ import WelcomeScreen from './screen/WelcomeScreen';
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+// import React from 'react';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import { TailwindProvider } from 'tailwindcss-react-native';
+// import Homepagescreen from './components/screens/Homepagescreen';
+
+// export default function App() {
+//   const Stack = createNativeStackNavigator();
+//   // const Drawer = createDrawerNavigator();
+
+//   return (
+//     <NavigationContainer >
+//         <TailwindProvider>
+
+//     <Stack.Navigator  initialRouteName="Homepagescreen">
+//     <Stack.Screen options={{headerShown: false}}name="Homepagescreen" component={Homepagescreen} />
+  
+      
+
+
+
+//     </Stack.Navigator>
+   
+//     </TailwindProvider>
+//   </NavigationContainer>
+    
+  
+//   );
+// }
+
+import { View, Text } from 'react-native'
+import React from 'react'
+
+const App = () => {
   return (
   <NavigationContainer>
     <Stack.Navigator initialRouteName='WelcomeScreen'>
@@ -20,11 +53,4 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App

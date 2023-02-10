@@ -1,53 +1,25 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import AddTodo from './screen/AddTodo';
-import DisplayTodo from './screen/DisplayTodo';
-import WelcomeScreen from './screen/WelcomeScreen';
+import AddTodo from './src/screens/AddTodo';
+import DisplayTodo from './src/screens/DisplayTodo';
+import HomeScreen from './src/screens/HomeScreen';
 
 const Stack = createNativeStackNavigator();
 
-// import React from 'react';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { TailwindProvider } from 'tailwindcss-react-native';
-// import Homepagescreen from './components/screens/Homepagescreen';
-
-// export default function App() {
-//   const Stack = createNativeStackNavigator();
-//   // const Drawer = createDrawerNavigator();
-
-//   return (
-//     <NavigationContainer >
-//         <TailwindProvider>
-
-//     <Stack.Navigator  initialRouteName="Homepagescreen">
-//     <Stack.Screen options={{headerShown: false}}name="Homepagescreen" component={Homepagescreen} />
-  
-      
-
-
-
-//     </Stack.Navigator>
-   
-//     </TailwindProvider>
-//   </NavigationContainer>
-    
-  
-//   );
-// }
-
-import { View, Text } from 'react-native'
+// import { View, Text } from 'react-native'
 import React from 'react'
+import CompletedTasks from './src/screens/CompletedTasks';
+import UncompletedTasks from './src/screens/UncompletedTasks';
 
 const App = () => {
   return (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName='WelcomeScreen'>
+    <Stack.Navigator initialRouteName='HomeScreen'>
       <Stack.Screen options={{headerShown: false}} name="AddTodo" component={AddTodo} />
-      <Stack.Screen options={{headerShown: false}} name="WelcomeScreen" component={WelcomeScreen} />
+      <Stack.Screen options={{headerShown: false}} name="HomeScreen" component={HomeScreen} />
       <Stack.Screen options={{headerShown: false}} name="DisplayTodo" component={DisplayTodo} />
+      <Stack.Screen options={{headerShown: false}} name="CompletedTasks" component={CompletedTasks} />
+      <Stack.Screen options={{headerShown: false}} name="UncompletedTasks" component={UncompletedTasks} />
     </Stack.Navigator>
   </NavigationContainer>
   );

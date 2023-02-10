@@ -1,3 +1,12 @@
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import AddTodo from './screen/AddTodo';
+import DisplayTodo from './screen/DisplayTodo';
+import WelcomeScreen from './screen/WelcomeScreen';
+
+const Stack = createNativeStackNavigator();
 
 // import React from 'react';
 // import { NavigationContainer } from '@react-navigation/native';
@@ -34,10 +43,14 @@ import React from 'react'
 
 const App = () => {
   return (
-    <View>
-      <Text>App</Text>
-    </View>
-  )
+  <NavigationContainer>
+    <Stack.Navigator initialRouteName='WelcomeScreen'>
+      <Stack.Screen options={{headerShown: false}} name="AddTodo" component={AddTodo} />
+      <Stack.Screen options={{headerShown: false}} name="WelcomeScreen" component={WelcomeScreen} />
+      <Stack.Screen options={{headerShown: false}} name="DisplayTodo" component={DisplayTodo} />
+    </Stack.Navigator>
+  </NavigationContainer>
+  );
 }
 
 export default App

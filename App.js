@@ -1,12 +1,22 @@
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import AddTodo from './screen/AddTodo';
+import DisplayTodo from './screen/DisplayTodo';
+import WelcomeScreen from './screen/WelcomeScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+  <NavigationContainer>
+    <Stack.Navigator initialRouteName='WelcomeScreen'>
+      <Stack.Screen options={{headerShown: false}} name="AddTodo" component={AddTodo} />
+      <Stack.Screen options={{headerShown: false}} name="WelcomeScreen" component={WelcomeScreen} />
+      <Stack.Screen options={{headerShown: false}} name="DisplayTodo" component={DisplayTodo} />
+    </Stack.Navigator>
+  </NavigationContainer>
   );
 }
 

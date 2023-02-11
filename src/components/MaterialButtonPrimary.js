@@ -4,7 +4,7 @@ import { StyleSheet, TouchableOpacity, Text } from "react-native";
 function MaterialButtonPrimary(props) {
   return (
     <TouchableOpacity style={[styles.container, props.style]}>
-      <Text style={styles.caption}>BUTTON</Text>
+      <Text style={styles.caption}>Add Task</Text>
     </TouchableOpacity>
   );
 }
@@ -30,7 +30,9 @@ const styles = StyleSheet.create({
   },
   caption: {
     color: "#fff",
-    fontSize: 14
+    fontSize: 14,
+    width:100,
+    textAlign:'center'
   }
 });
 

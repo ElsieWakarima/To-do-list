@@ -1,62 +1,63 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+
+import React, { Component, useState } from "react";
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import IoniconsIcon from "react-native-vector-icons/Ionicons";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import '../components/global.js'
 
-function DisplayTodo(props) {
+function Untitled2(props) {
+  const [complete,setComplete]=useState(false);
+  const [incomplete,setIncomplete]=useState(false);
+  const [todo,setTodo]=useState(true)
   return (
     <View style={styles.container}>
-      <View style={styles.rect3}>
-        <Text style={styles.yourTasks}>Your Tasks</Text>
-        
-        <TouchableOpacity
-                onPress={() => props.navigation.navigate("CompletedTasks")}
-                style={styles.button}
-              >
-          <Text style={styles.completedTasks}>Completed Tasks</Text>
-          </TouchableOpacity>
-      
-
-        <TouchableOpacity style={styles.button2}  onPress={() => props.navigation.navigate("UncompletedTasks")}>
-          <Text style={styles.uncompletedTasks}>Uncompleted Tasks</Text>
-        </TouchableOpacity>
-        <View style={styles.icon1Row}>
-        <TouchableOpacity
+      <View style={styles.rect3Stack}>
+        <View style={styles.rect3}>
+          <View style={styles.icon1Row}>
+          <TouchableOpacity
                 onPress={() => props.navigation.navigate("HomeScreen")}
+                 
+              >
+            <EntypoIcon name="home" style={styles.icon1}></EntypoIcon>
+            </TouchableOpacity>
+            <TouchableOpacity
+               onPress={() => props.navigation.navigate("AddTodo")}
                
               >
-          <EntypoIcon name="home" style={styles.icon1}></EntypoIcon>
-          </TouchableOpacity>
-          <TouchableOpacity
-                onPress={() => props.navigation.navigate("AddTodo")}
-               
-              >
-          <IoniconsIcon
-            name="ios-add-circle-outline"
-            style={styles.icon2}
-          ></IoniconsIcon>
-          </TouchableOpacity>
-             <TouchableOpacity
+            <IoniconsIcon
+              name="ios-add-circle-outline"
+              style={styles.icon2}
+            ></IoniconsIcon>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => props.navigation.navigate("DisplayTodo")}
+              
+               >
+            <FeatherIcon name="list" style={styles.icon3}></FeatherIcon></TouchableOpacity>
+            <TouchableOpacity
                 onPress={() => props.navigation.navigate("DisplayTodo")}
                
-              ><FeatherIcon name="list" style={styles.icon3}></FeatherIcon></TouchableOpacity>
-          
-          <TouchableOpacity
-                onPress={() => props.navigation.navigate("DisplayTodo")}
-               
-              >
-          <FontAwesomeIcon
-            name="user-circle"
-            style={styles.icon4}
-          ></FontAwesomeIcon>
-          </TouchableOpacity>
+            >
+            <FontAwesomeIcon
+              name="user-circle"
+              style={styles.icon4}
+            ></FontAwesomeIcon>
+            </TouchableOpacity>
+          </View>
         </View>
-
+       
+        <TouchableOpacity style={styles.button2}>
+          <Text style={styles.incompleteTasks}>Incomplete Tasks</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.completedTasks}>Completed Tasks</Text>
+        </TouchableOpacity>
 
       </View>
+      <View  ></View>
     </View>
   );
 }
@@ -66,60 +67,13 @@ const styles = StyleSheet.create({
     flex: 1
   },
   rect3: {
+    left: 14,
     width: 386,
     height: 812,
-    backgroundColor: "rgba(147,139,139,1)"
-  },
-  yourTasks: {
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    fontSize: 31,
-    marginTop: 59,
-    marginLeft: 93
-  },
-  button: {
-    width: 315,
-    height: 126,
-    backgroundColor: "rgba(134,139,137,1)",
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOffset: {
-      width: 3,
-      height: 3
-    },
-    elevation: 5,
-    shadowOpacity: 0.58,
-    shadowRadius: 0,
-    marginTop: 57,
-    marginLeft: 25
-  },
-  completedTasks: {
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    fontSize: 35,
-    marginTop: 42,
-    marginLeft: 20
-  },
-  button2: {
-    width: 315,
-    height: 126,
-    backgroundColor: "rgba(185,154,154,1)",
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOffset: {
-      width: 3,
-      height: 3
-    },
-    elevation: 5,
-    shadowOpacity: 0.58,
-    shadowRadius: 0,
-    marginTop: 127,
-    marginLeft: 30
-  },
-  uncompletedTasks: {
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    fontSize: 33,
-    marginTop: 54,
-    marginLeft: 9
+    position: "absolute",
+    backgroundColor: "rgba(147,139,139,1)",
+    top: 0,
+    flexDirection: "row"
   },
   icon1: {
     color: "rgba(0,0,0,1)",
@@ -153,10 +107,66 @@ const styles = StyleSheet.create({
   icon1Row: {
     height: 44,
     flexDirection: "row",
-    marginTop: 210,
+    flex: 1,
+    marginRight: 34,
     marginLeft: 25,
-    marginRight: 34
+    marginTop: 742
+  },
+  button2: {
+    top: 35,
+    left: 207,
+    width: 198,
+    height: 36,
+    position: "absolute",
+    backgroundColor: "rgba(185,154,154,1)",
+    shadowColor: "rgba(0,0,0,1)",
+    shadowOffset: {
+      width: 3,
+      height: 3
+    },
+    elevation: 5,
+    shadowOpacity: 0.58,
+    shadowRadius: 0
+  },
+  incompleteTasks: {
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    fontSize: 17,
+    marginTop: 9,
+    marginLeft: 22
+  },
+  button: {
+    top: 35,
+    left: 0,
+    width: 202,
+    height: 36,
+    position: "absolute",
+    backgroundColor: "rgba(134,139,137,1)",
+    shadowColor: "rgba(0,0,0,1)",
+    shadowOffset: {
+      width: 3,
+      height: 3
+    },
+    elevation: 5,
+    shadowOpacity: 0.58,
+    shadowRadius: 0
+  },
+  completedTasks: {
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    fontSize: 18,
+    width: 139,
+    height: 20,
+    marginTop: 6,
+    marginLeft: 20
+  },
+  rect3Stack: {
+    width: 405,
+    height: 812,
+    marginLeft: -14
   }
 });
 
-export default DisplayTodo;
+export default Untitled2;
+
+

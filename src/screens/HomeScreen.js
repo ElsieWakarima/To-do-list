@@ -177,10 +177,7 @@ function HomeScreen(props) {
               >
           <FeatherIcon name="list" style={styles.icon5}></FeatherIcon>
           </TouchableOpacity>
-          <FontAwesomeIcon
-            name="user-circle"
-            style={styles.icon4}
-          ></FontAwesomeIcon>
+        
         </View>
     </View>
   );
@@ -327,24 +324,18 @@ const styles = StyleSheet.create({
     width: 40,
     marginLeft: 47
   },
-  icon4: {
-    color: "rgba(128,128,128,1)",
-    fontSize: 40,
-    height: 40,
-    width: 40,
-    marginLeft: 47,
-    marginTop: 4
-  },
+  
   icon1Row: {
 
     height: '10%',
     flexDirection: "row",
     // marginBottom: 0,
-    marginLeft: '10%',
+    marginLeft: '23%',
     marginRight: 30,
     width:'90%',
-    position:'absolute',
-    marginTop:'202%'
+     // position:'absolute',
+    // marginTop:'202%',
+    bottom:-120
   },
   iconStyle: {
     color: "#616161",

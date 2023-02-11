@@ -13,6 +13,7 @@ import DatePicker from "react-native-date-picker";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import '../components/global.js'
+import * as Location from 'expo-location';
 
 
 import { SelectList } from 'react-native-dropdown-select-list'
@@ -32,6 +33,9 @@ function AddTodo(props) {
   const [endtime, setEndtime] = useState('Select Time');
   const [selected, setSelected] = React.useState("");
   const [tasks, setTasks] = useState([]);
+  const [lat, setlat] = useState('');
+  const [long, setlong] = useState('');
+
   const [todolist, settodolist] = useState(
     {
       name: "",
@@ -46,18 +50,54 @@ function AddTodo(props) {
     }
   );
  
+  const getLocation = () => {
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      // setLocation(location);
+      // console.log(location);
+
+      // setPin({
+        setlat(location.coords.latitude);
+        setlong(location.coords.longitude);
+      // })
+    })();
+
+ 
+    
+  }
+  useEffect(() => {
+    const interval = setInterval(() =>{
+      getLocation()
+
+    },1000)
+    // loaddata();
+    // loadtotal();
+    return()=>clearInterval(interval)
+  }, []);
   const addTask = (task) => {
-    var todo1 = []
-    todo1.push({
+    var day = date.getDate();
+    var month = date.getMonth();
+    var year = date.getFullYear();
+    var fulldate = day + '/' + month + '/' + year;
+
+
+    var todo1 =({
       name: taskname,
-      startdate: date,
+      startdate: fulldate,
       starttime: starttime,
       endtime: endtime,
       priority: selected,
-      alert: "",
-      longitude: "",
-      latitude: "",
-      status: "",
+      alert: 0,
+      longitude: long,
+      latitude: lat,
+      status: false,
     });
     global.todo.push(todo1)
 
@@ -76,7 +116,7 @@ function AddTodo(props) {
   // })
   // setTasks([...tasks, todolist]);
   const mydata = JSON.stringify(global.todo);
-console.log(mydata)
+console.log(global.todo)
     // if (task == null) return;
     // setTasks([...tasks, task]);
     // // Keyboard.dismiss();
@@ -93,6 +133,10 @@ console.log(mydata)
   var fulldate = day + '/' + month + '/' + year;
 
   const onChange = (event, selectedDate) => {
+    var day = date.getDate();
+  var month = date.getMonth();
+  var year = date.getFullYear();
+  var fulldate = day + '/' + month + '/' + year;
     const currentDate = selectedDate;
     setShow(false);
     setDate(currentDate);
@@ -173,7 +217,7 @@ const _retrieveData = async () => {
 }
 
 useEffect(() => {
-_retrieveData()
+console.log(global.todo)
 }, []);
       return (
     <View style={styles.container}>
@@ -188,7 +232,9 @@ _retrieveData()
           width:'80%',
           backgroundColor:'white',
           padding:12,
-          marginLeft:'10%'
+          marginLeft:'10%',
+          borderRadius: 14,
+
           }}
       ></TextInput>
         
@@ -221,8 +267,7 @@ _retrieveData()
         <View style={styles.materialUnderlineTextbox1Row}>
           <Pressable
             style={styles.materialUnderlineTextbox1}
-            // onPress={showstartTimepicker}
-            onPress={addTask}
+            onPress={showstartTimepicker}
 
           >
    
@@ -262,7 +307,7 @@ _retrieveData()
         </View>
         <View style={styles.priorityRow}>
           <Text style={styles.priority}>Priority</Text>
-          <Text style={styles.alert}>Alert</Text>
+          {/* <Text style={styles.alert}>Alert</Text> */}
         </View>
         <View style={styles.materialUnderlineTextbox3Row}>
           <View
@@ -278,13 +323,17 @@ _retrieveData()
             {/* <MaterialUnderlineTextbox
               style={styles.materialUnderlineTextbox4}
             ></MaterialUnderlineTextbox> */}
-            <MaterialSwitch style={styles.materialSwitch}></MaterialSwitch>
+            {/* <MaterialSwitch style={styles.materialSwitch}></MaterialSwitch> */}
           </View>
         </View>
-        <MaterialButtonPrimary
-        onPress={addTask}
+        <View
           style={styles.materialButtonPrimary}
-        ></MaterialButtonPrimary>
+        >
+           <TouchableOpacity style={[styles.button]}         onPress={addTask}
+>
+      <Text style={styles.caption}>Add Task</Text>
+    </TouchableOpacity>
+        </View>
         
       </View>
       <View style={styles.icon1Row}>
@@ -321,7 +370,9 @@ _retrieveData()
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(244,234,234,1)",
+    // backgroundColor: "rgba(244,234,234,1)",
+    backgroundColor:'#F3F4F7',
+
     height:'100%'
 
     // alignContent:'center',
@@ -329,21 +380,19 @@ const styles = StyleSheet.create({
   rect: {
     width: '100%',
     height: '90%',
-    backgroundColor: "rgba(244,234,234,1)"
+    // backgroundColor: "rgba(244,234,234,1)"
   },
   addTasks: {
-    fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 43,
     marginTop: 52,
     marginLeft: 91
   },
   taskName: {
-    fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 26,
     marginTop: 29,
-    marginLeft: 10
+    marginLeft: 20
   },
   materialUnderlineTextbox: {
     height: 43,
@@ -351,7 +400,6 @@ const styles = StyleSheet.create({
     marginLeft: 13
   },
   startDate: {
-    fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 20,
     marginTop: 16,
@@ -363,13 +411,11 @@ const styles = StyleSheet.create({
     // marginLeft: 
   },
   startTime: {
-    fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 20,
     marginTop: 3
   },
   endTime: {
-    fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 22,
     marginLeft: 81
@@ -399,13 +445,11 @@ const styles = StyleSheet.create({
     marginRight: 38
   },
   priority: {
-    fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 23,
     marginTop: 5
   },
   alert: {
-    fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 25,
     marginLeft: 104
@@ -457,13 +501,15 @@ const styles = StyleSheet.create({
     color: "rgba(128,128,128,1)",
     fontSize: 40,
     height: 44,
-    width: 40
+    width: 40,
+    marginLeft: 10,
+
   },
   icon2: {
     color: "rgba(128,128,128,1)",
     fontSize: 40,
     height: 44,
-    width: 33,
+    width: 40,
     marginLeft: 47
   },
   icon5: {
@@ -471,24 +517,26 @@ const styles = StyleSheet.create({
     fontSize: 40,
     height: 40,
     width: 40,
-    marginLeft: 61
+    marginLeft: 47
   },
   icon4: {
     color: "rgba(128,128,128,1)",
     fontSize: 40,
     height: 40,
     width: 40,
-    marginLeft: 57,
+    marginLeft: 47,
     marginTop: 4
   },
   icon1Row: {
 
     height: '10%',
     flexDirection: "row",
-    marginBottom: 0,
+    // marginBottom: 0,
     marginLeft: '10%',
     marginRight: 30,
-    width:'90%'
+    width:'90%',
+    position:'absolute',
+    marginTop:'202%'
   },
   iconStyle: {
     color: "#616161",
@@ -508,6 +556,34 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 8,
     
+  },
+
+  button: {
+    backgroundColor: "#2196F3",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    borderRadius: 44,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 5,
+    elevation: 2,
+    minWidth: 88,
+    paddingLeft: 16,
+    paddingRight: 16,
+    height:60,
+    top:30
+  },
+  caption: {
+    color: "#fff",
+    fontSize: 24,
+    width:'100%',
+    textAlign:'center',
+    fontWeight:'700'
   }
 });
 

@@ -203,15 +203,7 @@ function Displaytodo(props) {
           
             >
         <FeatherIcon name="list" style={styles.icon3}></FeatherIcon></TouchableOpacity>
-        <TouchableOpacity
-            onPress={() => props.navigation.navigate("DisplayTodo")}
-            
-        >
-        <FontAwesomeIcon
-          name="user-circle"
-          style={styles.icon4}
-        ></FontAwesomeIcon>
-        </TouchableOpacity>
+       
       </View>
     </View>
   );
@@ -256,24 +248,18 @@ const styles = StyleSheet.create({
     width: 40,
     marginLeft: 47
   },
-  icon4: {
-    color: "rgba(128,128,128,1)",
-    fontSize: 40,
-    height: 40,
-    width: 40,
-    marginLeft: 47,
-    marginTop: 4
-  },
+
   icon1Row: {
 
     height: '10%',
     flexDirection: "row",
     // marginBottom: 0,
-    marginLeft: '10%',
+    marginLeft: '23%',
     marginRight: 30,
     width:'90%',
-    position:'absolute',
-    marginTop:'202%'
+    // position:'absolute',
+    // marginTop:'202%',
+    bottom:-30
   },
   iconStyle: {
     color: "#616161",
@@ -282,49 +268,56 @@ const styles = StyleSheet.create({
   },
   button2: {
     top: 35,
-    left: 207,
-    width: 198,
+    left: 200,
+    width: '47%',
     height: 36,
     position: "absolute",
-    backgroundColor: "rgba(185,154,154,1)",
-    shadowColor: "rgba(0,0,0,1)",
+    backgroundColor: "#4278DE",
+    shadowColor: "#FFFFFF",
     shadowOffset: {
-      width: 3,
-      height: 3
+      width: 0,
+      height: 2
     },
+    borderRadius: 10,
     elevation: 5,
     shadowOpacity: 0.58,
     shadowRadius: 0
   },
   incompleteTasks: {
-    color: "#121212",
-    fontSize: 17,
-    marginTop: 9,
-    marginLeft: 22
+    color: "#DFE8FA",
+    fontSize: 16,
+    fontWeight:'900',
+    marginTop: 6,
+    marginLeft: 22,
+    height:'100%'
   },
   button: {
     top: 35,
     left: 0,
-    width: 202,
+    width: '47%',
     height: 36,
     position: "absolute",
-    backgroundColor: "rgba(134,139,137,1)",
-    shadowColor: "rgba(0,0,0,1)",
+    backgroundColor: "#DFE8FA",
+    shadowColor: "#FFFFFF",
     shadowOffset: {
-      width: 3,
-      height: 3
+      width: 0,
+      height: 2
     },
+    borderRadius:10,
     elevation: 5,
     shadowOpacity: 0.58,
     shadowRadius: 0
   },
   completedTasks: {
-    color: "#121212",
-    fontSize: 18,
+    color: "#4278DE",
+    fontSize: 16,
+    fontWeight:'900',
     width: 139,
     height: 20,
     marginTop: 6,
-    marginLeft: 20
+    marginLeft: 20,
+    height:'100%'
+
   },
   rect3Stack: {
     width: '100%',
@@ -436,13 +429,11 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   gaskNameAndTimtle: {
-    fontFamily: "roboto-700",
     color: "#343941",
     fontSize: 18,
     marginLeft: 9
   },
   time: {
-    fontFamily: "roboto-700",
     color: "#edadc0",
     fontSize: 16,
     marginLeft: '80%',
@@ -457,7 +448,6 @@ const styles = StyleSheet.create({
     marginRight: 27
   },
   latLong: {
-    fontFamily: "roboto-700",
     color: "#9ca0a4",
     fontSize: 10,
     marginTop: 2,

@@ -36,19 +36,7 @@ function AddTodo(props) {
   const [lat, setlat] = useState('');
   const [long, setlong] = useState('');
 
-  const [todolist, settodolist] = useState(
-    {
-      name: "",
-      startdate: "",
-      starttime: "",
-      endtime: "",
-      priority: "",
-      alert: "",
-      longitude: "",
-      latitude: "",
-      status: "",
-    }
-  );
+
  
   const getLocation = () => {
     (async () => {
@@ -69,6 +57,7 @@ function AddTodo(props) {
       // })
     })();
 
+    // getLocation();
  
     
   }
@@ -120,6 +109,7 @@ console.log(global.todo)
     // if (task == null) return;
     // setTasks([...tasks, task]);
     // // Keyboard.dismiss();
+    alert('Task Succesfully added')
   }
 
   const deleteTask = (deleteIndex) => {
@@ -131,6 +121,7 @@ console.log(global.todo)
   var month = date.getMonth();
   var year = date.getFullYear();
   var fulldate = day + '/' + month + '/' + year;
+  
 
   const onChange = (event, selectedDate) => {
     var day = date.getDate();
@@ -174,9 +165,7 @@ console.log(global.todo)
     }
     setMode(currentMode);
   };
-const handlename = (e) =>{
-  alert(e)
-}
+
   const showDatepicker = () => {
     setShow(true);
     showMode('date');
@@ -196,29 +185,9 @@ const handlename = (e) =>{
     {key:'3', value:'Low'},
     
 ]
-const _storeData = async () => {
-  try {
-      await AsyncStorage.setItem('name', 'Tom');
-  } catch (error) {
-      // Error saving data
-  }
-}
 
-const _retrieveData = async () => {
-  try {
-      const value = await AsyncStorage.getItem('name');
-      if (value !== null) {
-          // Our data is fetched successfully
-          console.log(value);
-      }
-  } catch (error) {
-      // Error retrieving data
-  }
-}
+getLocation()
 
-useEffect(() => {
-console.log(global.todo)
-}, []);
       return (
     <View style={styles.container}>
       <View style={styles.rect}>
@@ -358,10 +327,7 @@ console.log(global.todo)
               >
           <FeatherIcon name="list" style={styles.icon5}></FeatherIcon>
           </TouchableOpacity>
-          <FontAwesomeIcon
-            name="user-circle"
-            style={styles.icon4}
-          ></FontAwesomeIcon>
+         
         </View>
     </View>
   );
@@ -519,24 +485,18 @@ const styles = StyleSheet.create({
     width: 40,
     marginLeft: 47
   },
-  icon4: {
-    color: "rgba(128,128,128,1)",
-    fontSize: 40,
-    height: 40,
-    width: 40,
-    marginLeft: 47,
-    marginTop: 4
-  },
+
   icon1Row: {
 
     height: '10%',
     flexDirection: "row",
     // marginBottom: 0,
-    marginLeft: '10%',
+    marginLeft: '23%',
     marginRight: 30,
     width:'90%',
-    position:'absolute',
-    marginTop:'202%'
+     // position:'absolute',
+    // marginTop:'202%',
+    bottom:-30
   },
   iconStyle: {
     color: "#616161",

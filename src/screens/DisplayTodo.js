@@ -4,6 +4,7 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 import IoniconsIcon from "react-native-vector-icons/Ionicons";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import '../components/global.js'
 
 function DisplayTodo(props) {
   return (
@@ -53,6 +54,8 @@ function DisplayTodo(props) {
           ></FontAwesomeIcon>
           </TouchableOpacity>
         </View>
+
+
       </View>
     </View>
   );

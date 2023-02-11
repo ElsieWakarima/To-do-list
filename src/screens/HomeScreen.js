@@ -119,16 +119,16 @@ const styles = StyleSheet.create({
     
   },
   scrollArea: {
-    height: 2157,
+    height: '100%',
     position: "absolute",
     backgroundColor: "rgba(229,217,217,1)",
-    width: 375,
+    width: '100%',
     top: 0,
     left: 0
   },
   scrollArea_contentContainerStyle: {
-    height: 2157,
-    width: 375
+    height: '100%',
+    width: '100%'
   },
   helloUser: {
     fontFamily: "roboto-regular",
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     height: 148,
     flexDirection: "row",
     marginTop: 11,
-    marginLeft: 25,
+    marginLeft: '12%',
     marginRight: 39
   },
   group: {

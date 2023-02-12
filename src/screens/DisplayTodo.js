@@ -4,15 +4,13 @@ import { StyleSheet, View, TouchableOpacity, Text, FlatList, Pressable } from "r
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import IoniconsIcon from "react-native-vector-icons/Ionicons";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import '../components/global.js'
-import MaterialRadio from "../components/MaterialRadio.js";
-import MaterialSlider from "../components/MaterialSlider.js";
-// import Icon from "react-native-vector-icons/Entypo";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 
 function Displaytodo(props) {
+
+  // decalring constant and states
   const [complete,setComplete]=useState(false);
   const [incomplete,setIncomplete]=useState(false);
   const [alltodo,setallTodo]=useState(true)
@@ -23,29 +21,32 @@ function Displaytodo(props) {
 
   const mydata = JSON.stringify(global.todo);
 
-
+// function to update task status i.e completion
   const updateState = (name) => {
 
     console.log(name)
     const newState = data.map(item => {
-      // 👇️ if id equals 2, update country property
-      if (item.name === name) {
-        alert(item.status)
+      // 👇️ if item.name equals name, update status property
+      if (item.name === name && item.status == false) {
         return {...item, status: true};
       }
 
-      // 👇️ otherwise return the itemect as is
-      return item;
-    });
+      else{
+        return {...item, status: false};
+      }
 
+      // 👇️ otherwise return the itemect as is
+    });
+// updating global variable
     setdata(newState);
     global.todo = newState;
 
   };
+
+  // load tasks on load and reload for update
   useEffect(() => {
     const interval = setInterval(() =>{
       const mydata = JSON.stringify(global.todo);
-      // setdata(global.todo)
       let datas = global.todo.filter(function(item){
         return item.status == true;
      })
@@ -59,17 +60,17 @@ function Displaytodo(props) {
       console.log(global.todo)
 
     },1000)
-    // loaddata();
-    // loadtotal();
     return()=>clearInterval(interval)
   }, []);
   
-
+// display completed tasks
     const handleComplete = () =>{
       setIncomplete(false)
       setComplete(true)
       setallTodo(false)
     }
+    // display incompleted tasks
+
     const handleIncomplete = () =>{
       setIncomplete(true)
       setComplete(false)
@@ -79,6 +80,7 @@ function Displaytodo(props) {
     <View style={styles.container}>
     <View style={styles.rect3Stack}>
           <View style={styles.rect3}>
+          {/* load all tasks */}
          {alltodo &&   
          <FlatList
           style={{height:"90%",width:'100%'}}
@@ -88,7 +90,6 @@ function Displaytodo(props) {
           searchTerm={1}
            searchBy="status"
 
-          // keyExtractor={item => item.id}
           renderItem={({ item }) => {
             return ( 
 
@@ -108,6 +109,7 @@ function Displaytodo(props) {
             )
           }}
         /> }
+        {/* Load completed tasks */}
          {complete &&  
           <FlatList
           style={{height:"90%",width:'100%'}}
@@ -117,14 +119,14 @@ function Displaytodo(props) {
           searchTerm={1}
            searchBy="status"
 
-          // keyExtractor={item => item.id}
           renderItem={({ item }) => {
             return ( 
               <View style={styles.group}>
           <View style={styles.tododisplay}>
             <View style={styles.iconRow}>
-            
-            <Icon name={item.status ? "radiobox-marked" : "radiobox-blank"} style={styles.icon}></Icon>
+            <TouchableOpacity onPress={()=> updateState(item.name)}>
+              <Icon name={item.status ? "radiobox-marked" : "radiobox-blank"} style={styles.icon}></Icon>
+              </TouchableOpacity>
               <Text style={styles.gaskNameAndTimtle}>{item.name}</Text>
               <Text style={styles.time}>{item.starttime}</Text>
             </View>
@@ -134,6 +136,7 @@ function Displaytodo(props) {
             )
           }}
         />}
+        {/* load uncompleted tasks */}
          {incomplete &&
             <FlatList
           style={{height:"90%",width:'100%'}}
@@ -143,7 +146,6 @@ function Displaytodo(props) {
           searchTerm={1}
            searchBy="status"
 
-          // keyExtractor={item => item.id}
           renderItem={({ item }) => {
             return ( 
               
@@ -167,13 +169,14 @@ function Displaytodo(props) {
          
           </View>
         <View style={{marginTop:15,marginLeft:'5%'}}>
+        {/* toggle incomplete tasks */}
             <TouchableOpacity style={styles.button2}
             onPress={handleIncomplete}
             >
                 <Text style={styles.incompleteTasks}>Incomplete Tasks</Text>
               </TouchableOpacity>
-              
-              <TouchableOpacity style={styles.button}
+        {/* toggle completed tasks */}
+        <TouchableOpacity style={styles.button}
               onPress={handleComplete}
               >
                 <Text style={styles.completedTasks}>Completed Tasks</Text>
@@ -182,6 +185,8 @@ function Displaytodo(props) {
             
 
       </View>
+            {/* bottom navigation bar */}
+
     <View style={styles.icon1Row}>
         <TouchableOpacity
             onPress={() => props.navigation.navigate("HomeScreen")}
@@ -212,7 +217,6 @@ function Displaytodo(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "rgba(147,139,139,1)",
     backgroundColor:'#F3F4F7'
 
   },
@@ -221,7 +225,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     position: "absolute",
-    // backgroundColor: "rgba(147,139,139,1)",
     top: 12,
     flexDirection: "row",
     marginTop:'20%'
@@ -253,12 +256,9 @@ const styles = StyleSheet.create({
 
     height: '10%',
     flexDirection: "row",
-    // marginBottom: 0,
     marginLeft: '23%',
     marginRight: 30,
     width:'90%',
-    // position:'absolute',
-    // marginTop:'202%',
     bottom:-30
   },
   iconStyle: {
@@ -419,8 +419,6 @@ const styles = StyleSheet.create({
     borderColor: "#eeedef"
   },
   icon: {
-    // color: "rgba(128,128,128,1)",
-    // fontSize: 17,
     height: 29,
     width: 25,
     marginTop: 1,

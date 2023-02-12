@@ -6,12 +6,12 @@ import HomeScreen from './src/screens/HomeScreen';
 
 const Stack = createNativeStackNavigator();
 
-// import { View, Text } from 'react-native'
 import React from 'react'
 
 
 const App = () => {
   return (
+      // diclare and state all the available screen for routing 
   <NavigationContainer>
     <Stack.Navigator initialRouteName='HomeScreen'>
       <Stack.Screen options={{headerShown: false}} name="AddTodo" component={AddTodo} />

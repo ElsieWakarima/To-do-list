@@ -24,7 +24,7 @@ function HomeScreen(props) {
   const [today, settoday] = useState([]);
   const [date, setDate] = useState(new Date());
 
-
+// function to count completed ,incomplete, all and today tasks
  const counttodo =() => {
     const todo = global.todo.filter(item => item.status === false);
     setcount(todo.length)
@@ -38,6 +38,7 @@ function HomeScreen(props) {
     const atodo = global.todo.filter(item => item.alert === 0);
     setacount(atodo.length)
 }
+//run on load and after every second
   useEffect(() => {
 
   
@@ -46,8 +47,6 @@ function HomeScreen(props) {
       mydate()
       console.log(today)
     },1000)
-    // loaddata();
-    // loadtotal();
     return()=>clearInterval(interval)
   }, []);
   const mydate = () => {
@@ -64,11 +63,10 @@ function HomeScreen(props) {
     <View style={styles.container}>
       <View style={styles.scrollAreaStack}>
         <View style={styles.scrollArea}>
-       
+       {/* display number of uncompleted tasks */}
             <Text style={styles.helloUser}>Welcome</Text>
             <Text style={styles.tasksAvailable}>{count} tasks available for you</Text>
             <Text style={styles.tasks}>Tasks</Text>
-
             <View style={styles.container}>
       <View style={styles.ccountRow}>
         <View style={styles.ccount}>
@@ -79,6 +77,7 @@ function HomeScreen(props) {
                 style={styles.cicon}
               ></IoniconsIcon>
               <View style={styles.cnoColumn}>
+                     {/* display number of completed tasks */}
                 <Text style={styles.cno}>{ccount}</Text>
                 <Text style={styles.completed}>Completed</Text>
               </View>
@@ -90,6 +89,7 @@ function HomeScreen(props) {
             <View style={styles.piconRow}>
               <IoniconsIcon name="md-time" style={styles.picon}></IoniconsIcon>
               <View style={styles.pnoColumn}>
+                     {/* display number of pending tasks */}
                 <Text style={styles.pno}>{count}</Text>
                 <Text style={styles.pending}>Pending</Text>
               </View>
@@ -106,6 +106,7 @@ function HomeScreen(props) {
                 style={styles.ticon}
               ></FontAwesomeIcon>
               <View style={styles.tnoColumn}>
+                  {/* display number of todays tasks */}
                 <Text style={styles.tno}>{tcount}</Text>
                 <Text style={styles.today}>Today</Text>
               </View>
@@ -120,6 +121,7 @@ function HomeScreen(props) {
                 style={styles.aicon}
               ></FontAwesomeIcon>
               <View style={styles.apnColumn}>
+                {/* display number of all tasks */}
                 <Text style={styles.apn}>{acount}</Text>
                 <Text style={styles.allTodo}>All Todo</Text>
               </View>
@@ -132,6 +134,7 @@ function HomeScreen(props) {
 
             <Text style={styles.todaysTask}>Today&#39;s Task</Text>
             <View style={styles.rect14}>
+            {/* display list of all todays tasks */}
             <FlatList
           style={{height:"90%",width:'100%'}}
           enableEmptySections={true}
@@ -140,7 +143,6 @@ function HomeScreen(props) {
           searchTerm={1}
            searchBy="status"
 
-          // keyExtractor={item => item.id}
           renderItem={({ item }) => {
             return ( 
 
@@ -155,6 +157,7 @@ function HomeScreen(props) {
         </View>
        
       </View>
+      {/* bottom navigation bar */}
       <View style={styles.icon1Row}>
         <TouchableOpacity
                 onPress={() => props.navigation.navigate("HomeScreen")}
@@ -194,7 +197,6 @@ const styles = StyleSheet.create({
   scrollArea: {
     height: '100%',
     position: "absolute",
-    // backgroundColor: "rgba(229,217,217,1)",
     width: '100%',
     top: 0,
     left: 0
@@ -329,12 +331,10 @@ const styles = StyleSheet.create({
 
     height: '10%',
     flexDirection: "row",
-    // marginBottom: 0,
     marginLeft: '23%',
     marginRight: 30,
     width:'90%',
-     // position:'absolute',
-    // marginTop:'202%',
+
     bottom:-120
   },
   iconStyle: {

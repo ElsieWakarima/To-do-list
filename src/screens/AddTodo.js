@@ -1,28 +1,18 @@
 import React, { Component, useEffect, useState } from "react";
 import { StyleSheet, View, Text,TouchableOpacity, TextInput, Button, Pressable } from "react-native";
-import MaterialUnderlineTextbox from "../components/MaterialUnderlineTextbox";
-import MaterialIconTextbox from "../components/MaterialIconTextbox";
-import MaterialUnderlineTextbox1 from "../components/MaterialUnderlineTextbox1";
-import MaterialSwitch from "../components/MaterialSwitch";
-import MaterialButtonPrimary from "../components/MaterialButtonPrimary";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import IoniconsIcon from "react-native-vector-icons/Ionicons";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
-import DatePicker from "react-native-date-picker";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import '../components/global.js'
 import * as Location from 'expo-location';
-
-
 import { SelectList } from 'react-native-dropdown-select-list'
-import { AsyncStorage } from "react-native";
 
 
 
 function AddTodo(props) {
-
+// declaring constant and states for the app
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -37,46 +27,36 @@ function AddTodo(props) {
   const [long, setlong] = useState('');
 
 
- 
+ // getting location function
   const getLocation = () => {
     (async () => {
-      
+      // checking location permission
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
         return;
       }
-
+//get user current location
       let location = await Location.getCurrentPositionAsync({});
-      // setLocation(location);
-      // console.log(location);
-
-      // setPin({
+      // set latitude and longitude
         setlat(location.coords.latitude);
         setlong(location.coords.longitude);
-      // })
     })();
-
-    // getLocation();
  
     
   }
   useEffect(() => {
+    // load location onload
     const interval = setInterval(() =>{
       getLocation()
-
     },1000)
-    // loaddata();
-    // loadtotal();
+
     return()=>clearInterval(interval)
   }, []);
+
+  // add task to a state function
   const addTask = (task) => {
-    var day = date.getDate();
-    var month = date.getMonth();
-    var year = date.getFullYear();
-    var fulldate = day + '/' + month + '/' + year;
-
-
+   
     var todo1 =({
       name: taskname,
       startdate: fulldate,
@@ -90,48 +70,30 @@ function AddTodo(props) {
     });
     global.todo.push(todo1)
 
-  //   settodolist(  
-  //     {
-  //       name: taskname,
-  //   startdate: date,
-  //   starttime: starttime,
-  //   endtime: endtime,
-  //   priority: selected,
-  //   alert: "",
-  //   longitude: "",
-  //   latitude: "",
-  //   status: "",
-
-  // })
-  // setTasks([...tasks, todolist]);
   const mydata = JSON.stringify(global.todo);
 console.log(global.todo)
-    // if (task == null) return;
-    // setTasks([...tasks, task]);
-    // // Keyboard.dismiss();
+   // alert when added successfully
     alert('Task Succesfully added')
   }
 
-  const deleteTask = (deleteIndex) => {
-    setTasks(tasks.filter((value, index) => index != deleteIndex));
-  }
-
-
+// converting date object to a string variable
   var day = date.getDate();
   var month = date.getMonth();
   var year = date.getFullYear();
   var fulldate = day + '/' + month + '/' + year;
   
-
+// set starting date on change
   const onChange = (event, selectedDate) => {
     var day = date.getDate();
   var month = date.getMonth();
   var year = date.getFullYear();
-  var fulldate = day + '/' + month + '/' + year;
+   fulldate = day + '/' + month + '/' + year;
     const currentDate = selectedDate;
     setShow(false);
     setDate(currentDate);
   };
+// set starting time on change
+
   const onStartChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     let today = currentDate;
@@ -143,6 +105,9 @@ console.log(global.todo)
     setShowstart(false);
     setStarttime(time);
   };
+
+  // set end time on change
+
   const onEndChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     let today = currentDate;
@@ -154,14 +119,10 @@ console.log(global.todo)
     setShowend(false);
     setEndtime(time);
   };
+
   const showMode = (currentMode) => {
     if (Platform.OS === 'android') {
-      // setShow(false);
-      // for iOS, add a button that closes the picker
 
-      // {showcompleted && <code ya completed hii side>}
-      // {showuncompleted && <code ya uncompleted hii side>}
-      // {showall && <code ya all hii side>}
     }
     setMode(currentMode);
   };
@@ -193,6 +154,7 @@ getLocation()
       <View style={styles.rect}>
         <Text style={styles.addTasks}>Add tasks</Text>
         <Text style={styles.taskName}>Task Name</Text>
+        {/* add task name */}
         <TextInput
         placeholder="Name"
         onChangeText={text => setTaskname(text)}
@@ -210,7 +172,7 @@ getLocation()
         <Text style={styles.startDate}>
         Start Date
         </Text>
-      {/* <Button onPress={showTimepicker} title="Show time picker!" /> */}
+        {/* toggle date picker for start date */}
       <Pressable onPress={showDatepicker} style={{ backgroundColor: "transparent",
     flexDirection: "row",
     alignItems: "center"}}>
@@ -234,6 +196,8 @@ getLocation()
           <Text style={styles.endTime}>End Time</Text>
         </View>
         <View style={styles.materialUnderlineTextbox1Row}>
+                {/* toggle time picker for start time */}
+
           <Pressable
             style={styles.materialUnderlineTextbox1}
             onPress={showstartTimepicker}
@@ -254,7 +218,8 @@ getLocation()
         />
       )}
           </Pressable>
-       
+          {/* toggle time picker for start time */}
+
           <Pressable
           onPress={showendTimepicker}
             style={styles.materialUnderlineTextbox12}
@@ -282,6 +247,8 @@ getLocation()
           <View
             style={styles.materialUnderlineTextbox3}
           >
+                          {/* select task priority */}
+
              <SelectList 
               setSelected={(val) => setSelected(val)} 
               data={data} 
@@ -289,22 +256,23 @@ getLocation()
               />
           </View>
           <View style={styles.materialUnderlineTextbox4Stack}>
-            {/* <MaterialUnderlineTextbox
-              style={styles.materialUnderlineTextbox4}
-            ></MaterialUnderlineTextbox> */}
-            {/* <MaterialSwitch style={styles.materialSwitch}></MaterialSwitch> */}
           </View>
         </View>
         <View
           style={styles.materialButtonPrimary}
         >
-           <TouchableOpacity style={[styles.button]}         onPress={addTask}
->
+{/*execute add task */}
+
+           <TouchableOpacity style={[styles.button]}
+           onPress={addTask}
+           >
       <Text style={styles.caption}>Add Task</Text>
     </TouchableOpacity>
         </View>
         
       </View>
+            {/* bottom navigation bar */}
+
       <View style={styles.icon1Row}>
         <TouchableOpacity
                 onPress={() => props.navigation.navigate("HomeScreen")}
@@ -336,17 +304,14 @@ getLocation()
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "rgba(244,234,234,1)",
     backgroundColor:'#F3F4F7',
 
     height:'100%'
 
-    // alignContent:'center',
   },
   rect: {
     width: '100%',
     height: '90%',
-    // backgroundColor: "rgba(244,234,234,1)"
   },
   addTasks: {
     color: "#121212",
@@ -372,9 +337,6 @@ const styles = StyleSheet.create({
     marginLeft: 15
   },
   dateselecter: {
-    // height: 43,
-    // width: 330,
-    // marginLeft: 
   },
   startTime: {
     color: "#121212",
@@ -490,12 +452,9 @@ const styles = StyleSheet.create({
 
     height: '10%',
     flexDirection: "row",
-    // marginBottom: 0,
     marginLeft: '23%',
     marginRight: 30,
     width:'90%',
-     // position:'absolute',
-    // marginTop:'202%',
     bottom:-30
   },
   iconStyle: {
